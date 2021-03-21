@@ -156,23 +156,21 @@
         <div class="row justify-content-center">
           <div class="col-md-6">
             <!-- alert -->
-            <div class="alert alert-success alert-dismissible fade show d-none my-alert" role="alert">
-              <strong>Terima Kasih!</strong>pesan anda sudah kami terima.
-              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            <div class="alert alert-dismissible fade show d-none my-alert" role="alert">
             </div>
             <!-- batas -->
             <form name="dinar-contact-form">
               <div class="mb-3">
                 <label for="name" class="form-label">Nama lengkap</label>
-                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="name" name="nama" />
+                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="name" name="nama" required/>
               </div>
               <div class="mb-3">
                 <label for="email" class="form-label">Email</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="email" name="email" />
+                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="email" name="email" required/>
               </div>
               <div class="mb-3">
                 <label for="pesan" class="form-label">Pesan</label>
-                <textarea class="form-control" id="pesan" rows="3" name="pesan"></textarea>
+                <textarea class="form-control" id="pesan" rows="3" name="pesan" required></textarea>
               </div>
               <button type="submit" class="btn btn-primary btn-kirim mb-3">Kirim</button>
               <!-- batas button -->
@@ -223,12 +221,23 @@
             btnLoading.classList.toggle('d-none');
             btnKirim.classList.toggle('d-none');
             // tampilkan alert
+            myAlert.innerHTML = `<strong>Terima Kasih!</strong> pesan anda sudah kami terima.`;
+            myAlert.classList.toggle('alert-success');
             myAlert.classList.toggle('d-none');
             // reset formnya
             form.reset();
-            console.log('Success!', response);
           })
-          .catch((error) => console.error('Error!', error.message));
+          .catch((error) => {
+            // tampilkan tombol kirim, hilangkan tombol loading
+            btnLoading.classList.toggle('d-none');
+            btnKirim.classList.toggle('d-none');
+            // tampilkan alert
+            myAlert.innerHTML = `<strong>Terjadi Kesalahan!</strong> pesan gagal dikirim.`;
+            myAlert.classList.toggle('alert-danger');
+            myAlert.classList.toggle('d-none');
+            // reset formnya
+            form.reset();            
+          });
       });
     </script>
   </body>
